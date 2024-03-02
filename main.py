@@ -9,46 +9,33 @@ import numpy as np
 pyt.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 #===================================================
+tests = ["test.png", "test_blue.png", "test_gold.png", "test_gray.png", "test_violet.png"]
 
-image = cv2.imread("test.png")
-change_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-#cv2.imshow("Gray", change_image)
-#cv2.waitKey(0)
+star = cv2.imread("star.png", cv2.IMREAD_GRAYSCALE)
 
-powers = pyt.image_to_string(change_image, lang="pol+eng").split()
+for test in tests:
+  image = cv2.imread(test)
+  change_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-purple = powers[0][0]
-green = powers[0][2]
-blue = powers[0][4]
-red = powers[0][6]
-print(purple, green, blue, red)
+  powers = pyt.image_to_string(change_image, lang="pol+eng").split()
 
-#====================================================
-star = cv2.imread("star.png")
-star = cv2.cvtColor(star, cv2.COLOR_BGR2GRAY)
-# cv2.imshow("Gray", star)
-# cv2.waitKey(0)
+  try: #nie działa dla wszystkich :/
+    purple = powers[0][0]
+    green = powers[0][2]
+    blue = powers[0][4]
+    red = powers[0][6]
+    print(purple, green, blue, red)
+  except:
+    pass
+  w, h = star.shape[::-1]
+  res = cv2.matchTemplate(change_image, star, cv2.TM_CCOEFF_NORMED)
+  threshold = 0.8
+  loc = np.where( res >= threshold)
+  for pt in zip(*loc[::-1]):
+    cv2.rectangle(image, pt, (pt[0] + w, pt[1] + h), (0,0,255), 2)
+  cv2.imshow("change", image)
+  cv2.waitKey(0)
 
-height, width = change_image.shape
-H, W = star.shape
-
-methods = [cv2.TM_CCOEFF, cv2.TM_CCOEFF_NORMED, cv2.TM_CCORR,
-             cv2.TM_CCORR_NORMED, cv2.TM_SQDIFF] 
-
-for method in methods:
-   change_image2 = change_image.copy()
-   result = cv2.matchTemplate(change_image2, star, method)
-   min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
-   print(min_loc, max_loc)
-   if method in [cv2.TM_SQDIFF,cv2.TM_CCORR]:
-     lacation = min_loc
-   else:
-     location = max_loc
-   bottom_right = (location[0] + W, location[1] + H)
-   cv2.rectangle(change_image2, location,bottom_right, 255, 5)
-   
-   cv2.imshow("change", change_image2)
-   cv2.waitKey(0)
-   cv2.destroyAllWindows() 
+  
 
 
