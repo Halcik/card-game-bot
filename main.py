@@ -18,7 +18,8 @@ class Card:
     self.powers = powers
     self.energy = 4
     self.position = None #do napisania, kolejność ułożenia (zmienia się potem)
-    self.level = None #do napisania - czy złota, fioletowa, czy szara
+    self.level = None #do zastosowania
+
 
   def __del__(self):
     del self.n_stars
@@ -27,37 +28,64 @@ class Card:
     del self.energy
     del self.position
     del self.level
+    Card.n_cards+=1
+
 
   def __str__(self):
     return f'''Karta {self.image}:
     *Energia = {self.energy}
     *Moce = {self.powers}
     *Możliwości ulepszenia = {self.n_stars}'''
+  
+  def level(self):
+    match self.n_stars:
+      case 4: #violet
+        level = 1
+      case 3: #gold
+        level = 2
+      case 2: #blue
+        level = 3
+      case 1: #gray
+        level=4
+    return level
+  
+  def position(self): #do napisania określanie pozycji
+    ...
+
+  @classmethod
+  def get_powers(cls, image_read):
+    powers = pyt.image_to_string(image_read).split()
+    powers = "".join(powers)
+    try:
+      purple = powers[0]
+      green = powers[2]
+      blue = powers[4]
+      red = powers[6]
+      powers = [purple, green, blue, red]
+      return powers
+    except:
+      print(f"Pobranie mocy nie powiodło się")
+      return 0
 
   @classmethod
   def get(cls, image):
     if 0<=Card.n_cards<6:
-      image_read = cv2.imread(image)
-      image_read = cv2.cvtColor(image_read, cv2.COLOR_BGR2GRAY)
-      powers = pyt.image_to_string(image_read).split()
-      powers = "".join(powers)
       try:
-        purple = powers[0]
-        green = powers[2]
-        blue = powers[4]
-        red = powers[6]
-        powers = [purple, green, blue, red]
+        image_read = cv2.imread(image)
+        image_read = cv2.cvtColor(image_read, cv2.COLOR_BGR2GRAY)
+        powers = Card.get_powers(image_read)
+        if not powers: raise Exception
+        res = cv2.matchTemplate(image_read, Card.star, cv2.TM_CCOEFF_NORMED)
+        threshold = 0.8
+        loc = np.where( res >= threshold)
+        n_stars = len(loc[0])
+        Card.n_cards+=1
+        return cls(image, n_stars, powers)
       except:
-        print(f"Pobranie mocy dla {image} nie powiodło się")
-        
-      res = cv2.matchTemplate(image_read, Card.star, cv2.TM_CCOEFF_NORMED)
-      threshold = 0.8
-      loc = np.where( res >= threshold)
-      n_stars = len(loc[0])
-      Card.n_cards+=1
-      return cls(image, n_stars, powers)
-    else:
-      return "Nie udało się stworzyć"
+        return "Nie udało się stworzyć obiektu karty"
+    
+
+
 
 card_one = Card.get("test.png")
 print(card_one)
