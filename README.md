@@ -1,12 +1,30 @@
 # card-game-bot
+Jest to bot, którego docelową funkcją będzie rozegranie całej gry w karty. Przed ostateczną wersją ma skupić się na analizie posiadanych w grze kart i proponować, które użyć w trwającej rundzie.
+>Obecnie projekt jest na etapie tworzenia samego obiektu karty na podstawie testowych screenów.
 
+### Klasa Card
+ Tworzy obiekt karty, która posiada:
+  - przekształcone zdjęcie do odczytu danych [image_read]
+  - ilość gwiazdek do ulepszeń karty [n_stars]
+  - wartości mocy w kolejności: fioletowa (dowództwo), zielona (zręczność), niebieska (inteligencja), czerwona (siła) [powers]
+  - ilość energii [energy]
+  - pozycja karty [position]
+  - level karty - ustalany przy pierwszym rozpoznaniu [level]
+  ##### 
+  Oprócz tego posiada metody:
+   - change_image - zmieniającą screena karty w postać do odczytu danych
+   - level - ustalającą level karty
+   - get_stars - ustala ilość gwiazdek do ulepszenia
+   - position - ustalenie pozycji karty
+   - get_powers - pobranie mocy z karty
+   - get - metoda tworząca kartę - dostępna za pomocą odwołania się do nazwy klasy (Card.get()) ze sprawdzaniem, czy nowa karta nie przekroczy ilości kart
 ### Zasady gry:
 Wspinaczka - karty
  - składa się z czterech etapów
  - na start dostajemy 3 losowe karty
  - możemy mieć max 6 kart
  - każda karta ma swoje moce oraz energię
- - jedna karta może mieć max 4 energii
+ - jedna karta może mieć max 4 punkty energii
  - moce:
 	- fioletowa - dowództwo
 	- zielona - zręczność
@@ -17,7 +35,7 @@ Wspinaczka - karty
 	- boska karta
 	- zwiększenie poziomu
 	- odzyskanie energii
-	- dopalacze (teoretycznie najbardziej useless
+	- dopalacze (teoretycznie najmniej opłacalne)
  - etap pierwszy
 	- rozpoznanie kart i zliczenie ich początkowej mocy, by ułatwić dalsze dobieranie
 	- idziemy prawą ścieżką zawsze
