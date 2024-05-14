@@ -1,34 +1,39 @@
 from main import Card
 
-#test to write
 
-card_one = Card.get("test.png")
-print(card_one)
-print(Card.n_cards)
+def test_blue_card_v1():
+  card = Card.get("test.png")
+  assert card.n_stars==2
 
-card_two = Card.get("test_blue.png")
-print(card_two)
-print(Card.n_cards)
+def test_blue_card_v2(): #this screen has 1 star, but can 2
+  card = Card.get("test_blue.png")
+  assert card.n_stars==1
 
-card_three = Card.get("test_gold.png")
-print(card_three)
-print(Card.n_cards)
+def test_violet_card():
+  card = Card.get("test_violet.png")
+  assert card.n_stars==4
 
-card_four = Card.get("test_gray.png")
-print(card_four)
-print(Card.n_cards)
+def test_gray_card():
+  card = Card.get("test_gray.png")
+  assert card.n_stars==1
 
-card_five = Card.get("test_violet.png")
-print(card_five)
-print(Card.n_cards)
+def test_gold_card():
+  card = Card.get("test_gold.png")
+  assert card.n_stars==3
 
-card_six = Card.get("test_violet.png")
-print(card_six)
-print(Card.n_cards)
+def test_seven_card():
+  card_one = Card.get("test.png")
+  card_two = Card.get("test_blue.png")
+  card_three = Card.get("test_gold.png")
+  card_four = Card.get("test_gray.png")
+  card_five = Card.get("test_violet.png")
+  card_six = Card.get("test_violet.png")
+  card_seven = Card.get("test_violet.png")
+  assert Card.n_cards==6
 
-card_seven = Card.get("test_violet.png")
-print(card_seven)
-print(Card.n_cards)
-
-del card_six
-print(Card.n_cards)
+def test_delete_card():
+  card_one = Card.get("test.png")
+  card_two = Card.get("test_blue.png")
+  card_three = Card.get("test_gold.png")
+  del card_two
+  assert Card.n_cards==2

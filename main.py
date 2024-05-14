@@ -52,7 +52,7 @@ class Card:
       case 2: #blue
         level = 3
       case 1: #gray
-        level=4
+        level = 4
     return level
   
   def get_stars(self, image_read):
@@ -87,6 +87,7 @@ class Card:
     return "Nie udało się stworzyć karty"
         
 
-card_one = Card.get("test.png")
-print(card_one)
-print(Card.n_cards)
+if __name__ =='__main__':
+  card_one = Card.get("test.png")
+  print(card_one)
+  print(Card.n_cards)
