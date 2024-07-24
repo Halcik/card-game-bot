@@ -29,6 +29,7 @@ def test_seven_card():
   card_five = Card.get("test_violet.png")
   card_six = Card.get("test_violet.png")
   card_seven = Card.get("test_violet.png")
+  assert card_seven=="Nie udało się stworzyć karty"
   assert Card.n_cards==6
 
 def test_delete_card():

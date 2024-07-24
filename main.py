@@ -12,13 +12,14 @@ class Card:
   star = cv2.imread("star.png", cv2.IMREAD_GRAYSCALE)
   n_cards = 0
 
-  def __init__(self, image):
+  def __init__(self, image, previous):
     self.image_read = self.change_image(image)
     self.n_stars = self.get_stars(self.image_read)
     self.powers = self.get_powers(self.image_read)
     self.energy = 4
-    self.position = None #do napisania, kolejność ułożenia (zmienia się potem)
-    self.level = self.level()
+    self.level = self.set_level()
+    self.previous = previous
+    self.position = self.set_position()
 
 
   def __del__(self):
@@ -38,32 +39,46 @@ class Card:
     *Możliwości ulepszenia = {self.n_stars}
     *Level = {self.level}'''
   
+
   def change_image(self, image):
     image_read = cv2.imread(image)
     image_read = cv2.cvtColor(image_read, cv2.COLOR_BGR2GRAY)
     return image_read
 
-  def level(self):
+
+  def set_level(self):
     match self.n_stars:
       case 4: #violet
-        level = 1
-      case 3: #gold
-        level = 2
-      case 2: #blue
-        level = 3
-      case 1: #gray
         level = 4
+      case 3: #gold
+        level = 3
+      case 2: #blue
+        level = 2
+      case 1: #gray
+        level = 1
     return level
   
+
   def get_stars(self, image_read):
     res = cv2.matchTemplate(image_read, Card.star, cv2.TM_CCOEFF_NORMED)
     threshold = 0.8
     loc = np.where( res >= threshold)
     n_stars = len(loc[0])
     return n_stars
-  
-  def position(self): #do napisania określanie pozycji
-    ...
+
+
+  def set_position(self):
+    if Card.n_cards<=3: #3 starter cards
+      return Card.n_cards
+    
+    while self.previous!=None: #now only check level, but must also stars
+      if self.previous.level>self.level:
+        return self.previous.position+1
+      self.previous.position+=1 #zwiększamy pozcyję poprzednika
+      self.previous = self.previous.previous #ustawiamy jego poprzednika na swojego
+      #self.previous.previous = self #ustawiamy mu poprzednika na siebie
+    return 1
+
 
   def get_powers(self, image_read):
     powers = pyt.image_to_string(image_read).split()
@@ -79,15 +94,21 @@ class Card:
       print(f"Pobranie mocy nie powiodło się")
       return 0
 
+
   @classmethod
-  def get(cls, image):
+  def get(cls, image, previous=None):
     if 0<=Card.n_cards<6:
         Card.n_cards+=1
-        return cls(image)
+        return cls(image, previous)
     return "Nie udało się stworzyć karty"
         
 
 if __name__ =='__main__':
   card_one = Card.get("test.png")
-  print(card_one)
-  print(Card.n_cards)
+  card_two = Card.get("test.png", card_one)
+  card_three = Card.get("test.png", card_two)
+  card_four = Card.get("test_gold.png", card_three)
+  cards = [card_one, card_two, card_three, card_four]
+  print("Ilość utworzonych kart: ", Card.n_cards)
+  for card in cards:
+    print(card) #2, 3, 4, 1
