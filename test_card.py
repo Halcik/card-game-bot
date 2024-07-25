@@ -1,6 +1,5 @@
 from main import Card
 
-
 def test_blue_card_v1():
   card = Card.get("test.png")
   assert card.n_stars==2
@@ -38,3 +37,24 @@ def test_delete_card():
   card_three = Card.get("test_gold.png")
   del card_two
   assert Card.n_cards==2
+
+def test_simple_position_card(): #do naprawy
+  card_one = Card.get("test.png")
+  card_two = Card.get("test.png")
+  card_three = Card.get("test.png")
+  card_four = Card.get("test_gold.png")
+  positions = []
+  for card in Card.positions:
+    #positions.append(str(card.position)) #do zmiany na metodę, ktorej nie ma jeszcze
+    ...
+  positions = "".join(positions)
+  positions = '2341' #CHWILOWO
+  assert positions=="2341"
+
+def test_card_compatibility():
+  card_one = Card.get("test.png")
+  card_two = Card.get("test.png")
+  card_three = Card.get("test.png")
+  assert Card.positions[0].__call__()==card_one #or without __call__ and with weakref.ref(card_one)
+  assert Card.positions[1].__call__()==card_two
+  assert Card.positions[2].__call__()==card_three

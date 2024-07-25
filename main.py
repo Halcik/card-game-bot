@@ -1,6 +1,7 @@
 import pytesseract as pyt #from installer (for windows) https://github.com/UB-Mannheim/tesseract/wiki
 import cv2
 import numpy as np
+import weakref
 
 
 #langCodes - https://tesseract-ocr.github.io/tessdoc/Data-Files-in-different-versions.html
@@ -11,14 +12,16 @@ pyt.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 class Card:
   star = cv2.imread("star.png", cv2.IMREAD_GRAYSCALE)
   n_cards = 0
+  positions = []
 
-  def __init__(self, image, previous):
+  def __init__(self, image):
+    Card.n_cards+=1
     self.image_read = self.change_image(image)
     self.n_stars = self.get_stars(self.image_read)
     self.powers = self.get_powers(self.image_read)
     self.energy = 4
     self.level = self.set_level()
-    self.previous = previous
+    Card.positions.append(weakref.ref(self))
     self.position = self.set_position()
 
 
@@ -27,10 +30,13 @@ class Card:
     del self.powers
     del self.image_read
     del self.energy
-    del self.position
     del self.level
+    del self.position  
+    if weakref.ref(self) in Card.positions:
+      print("Byłem w liście")
+      Card.positions.remove(weakref.ref(self))
     Card.n_cards-=1
-
+    
 
   def __str__(self):
     return f'''Karta {self.position}:
@@ -65,19 +71,9 @@ class Card:
     loc = np.where( res >= threshold)
     n_stars = len(loc[0])
     return n_stars
-
-
+  
   def set_position(self):
-    if Card.n_cards<=3: #3 starter cards
-      return Card.n_cards
-    
-    while self.previous!=None: #now only check level, but must also stars
-      if self.previous.level>self.level:
-        return self.previous.position+1
-      self.previous.position+=1 #zwiększamy pozcyję poprzednika
-      self.previous = self.previous.previous #ustawiamy jego poprzednika na swojego
-      #self.previous.previous = self #ustawiamy mu poprzednika na siebie
-    return 1
+    ...
 
 
   def get_powers(self, image_read):
@@ -96,19 +92,16 @@ class Card:
 
 
   @classmethod
-  def get(cls, image, previous=None):
+  def get(cls, image):
     if 0<=Card.n_cards<6:
-        Card.n_cards+=1
-        return cls(image, previous)
+        return cls(image)
     return "Nie udało się stworzyć karty"
         
 
 if __name__ =='__main__':
   card_one = Card.get("test.png")
-  card_two = Card.get("test.png", card_one)
-  card_three = Card.get("test.png", card_two)
-  card_four = Card.get("test_gold.png", card_three)
-  cards = [card_one, card_two, card_three, card_four]
-  print("Ilość utworzonych kart: ", Card.n_cards)
-  for card in cards:
-    print(card) #2, 3, 4, 1
+  card_two = Card.get("test.png")
+  card_three = Card.get("test.png")
+  card_four = Card.get("test_gold.png")
+  print(card_one.powers)
+  print(Card.positions[0].__call__().powers)

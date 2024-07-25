@@ -1,5 +1,5 @@
 # Card Game Bot
-Jest to bot, którego docelową funkcją będzie rozegranie całej gry w karty. Przed ostateczną wersją ma skupić się na analizie posiadanych w grze kart i proponować, które użyć w trwającej rundzie.
+Jest to bot, którego docelową funkcją będzie rozegranie całej gry w karty. Przed ostateczną wersją ma skupić się na analizie posiadanych w grze kart i proponować, które użyć w trwającej rundzie, by z największym prawdopodobieństwem pokonać przeciwnika.
 >Obecnie projekt jest na etapie tworzenia samego obiektu karty na podstawie testowych screenów.
 
 ### **Klasa Card**
@@ -10,15 +10,14 @@ Jest to bot, którego docelową funkcją będzie rozegranie całej gry w karty. 
   - ilość energii **[energy]**
   - pozycja karty **[position]**
   - level karty - ustalany przy pierwszym rozpoznaniu **[level]**
-  - poprzednik - odwołanie do poprzedniej karty względem położenia **[previous]**
   ##### 
   Oprócz tego posiada metody:
    - **change_image** - zmieniającą screena karty w postać do odczytu danych
    - **set_level** - ustalającą level karty
    - **get_stars** - ustala ilość gwiazdek do ulepszenia
-   - **set_position** - ustalenie pozycji karty
+   - **set_position** - ustalenie pozycji karty i zwrócenie jej numeru
    - **get_powers** - pobranie mocy z karty
-   - **get** - metoda tworząca kartę - dostępna za pomocą odwołania się do nazwy klasy (Card.get()) ze sprawdzaniem, czy nowa karta nie przekroczy ilości kart
+   - **get** - metoda tworząca kartę - dostępna za pomocą odwołania się do nazwy klasy (Card.get()) ze sprawdzaniem, czy nowa karta nie przekroczy maksymalnej ilości kart
 ### Zasady gry:
 Wspinaczka - karty
  - składa się z czterech etapów
