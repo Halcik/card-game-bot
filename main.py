@@ -20,8 +20,9 @@ class Card:
     self.n_stars = self.get_stars(self.image_read)
     self.powers = self.get_powers(self.image_read)
     self.energy = 4
-    self.level = self.set_level()
+    self.level = self.set_level() # probably to be removed
     Card.positions.append(weakref.ref(self))
+    self.n_card = Card.n_cards
     self.position = self.set_position()
 
 
@@ -30,11 +31,11 @@ class Card:
     del self.powers
     del self.image_read
     del self.energy
-    del self.level
-    del self.position  
+    del self.level # probably to be removed
+    del self.position
+    del self.n_card  
     if weakref.ref(self) in Card.positions:
       Card.positions.remove(weakref.ref(self))
-    Card.n_cards-=1
     
 
   def __str__(self):
@@ -51,7 +52,7 @@ class Card:
     return image_read
 
 
-  def set_level(self):
+  def set_level(self): # probably to be removed
     match self.n_stars:
       case 4: #violet
         level = 4
@@ -71,13 +72,17 @@ class Card:
     n_stars = len(loc[0])
     return n_stars
   
+
   def set_position(self):
     position = Card.positions.index(weakref.ref(self))
-    if Card.n_cards<=3:
+    if len(Card.positions)<=3:
       return position
     
     while position>=0:
-      if self.level<Card.positions[position-1].__call__().level or position==0:
+      if self.powers[4] < Card.positions[position-1].__call__().powers[4] or position==0:
+        return position
+      
+      if self.powers[4] == Card.positions[position-1].__call__().powers[4] and self.n_card < Card.positions[position-1].__call__().n_card:
         return position
       
       temp_card = Card.positions[position-1]
@@ -91,11 +96,11 @@ class Card:
     powers = pyt.image_to_string(image_read).split()
     powers = "".join(powers)
     try:
-      purple = powers[0]
-      green = powers[2]
-      blue = powers[4]
-      red = powers[6]
-      powers = [purple, green, blue, red]
+      purple = int(powers[0])
+      green = int(powers[2])
+      blue = int(powers[4])
+      red = int(powers[6])
+      powers = [purple, green, blue, red, purple+green+blue+red]
       return powers
     except:
       print(f"Pobranie mocy nie powiodło się")
@@ -104,7 +109,7 @@ class Card:
 
   @classmethod
   def get(cls, image):
-    if 0<=Card.n_cards<6:
+    if 0<=len(Card.positions)<6:
         return cls(image)
     return "Nie udało się stworzyć karty"
         

@@ -6,18 +6,29 @@ Jest to bot, którego docelową funkcją będzie rozegranie całej gry w karty. 
  Tworzy obiekt karty, która posiada:
   - przekształcone zdjęcie do odczytu danych **[image_read]**
   - ilość gwiazdek do ulepszeń karty **[n_stars]**
-  - wartości mocy w kolejności: fioletowa (dowództwo), zielona (zręczność), niebieska (inteligencja), czerwona (siła) **[powers]**
+  - wartości mocy w kolejności: fioletowa (dowództwo), zielona (zręczność), niebieska (inteligencja), czerwona (siła), suma **[powers]**
   - ilość energii **[energy]**
+  - numer karty w grze **[n_card]**
   - pozycja karty **[position]**
-  - level karty - ustalany przy pierwszym rozpoznaniu **[level]**
+
+  - level karty - ustalany przy pierwszym rozpoznaniu **[level]** ***chwilowo nie wiem, czy będzie jednak potrzebna***
+
   ##### 
   Oprócz tego posiada metody:
    - **change_image** - zmieniającą screena karty w postać do odczytu danych
-   - **set_level** - ustalającą level karty
+
+   - **set_level** - ustalającą level karty - ***chwilowo nie wiem, czy będzie potrzebna, patrząc na to, że pozycję zaczęłam ustawiać względem sumy mocy.***
+
    - **get_stars** - ustala ilość gwiazdek do ulepszenia
    - **set_position** - ustalenie pozycji karty i zwrócenie jej numeru
    - **get_powers** - pobranie mocy z karty
    - **get** - metoda tworząca kartę - dostępna za pomocą odwołania się do nazwy klasy (Card.get()) ze sprawdzaniem, czy nowa karta nie przekroczy maksymalnej ilości kart
+
+#####
+...oraz statyczne pola:
+ - **star** - przechowuje odczytaną gwiazdkę
+ - **n_cards** - liczba kart istniejących w danej grze (niekoniecznie już aktywnych). Istotne przy ustalaniu kolejności kart - nowsza karta=wyższa pozycja
+ - **positions** - lista z kartami (ich słabymi referencjami do obiektu), na której operujemy zmianą kolejności
 ### Zasady gry:
 Wspinaczka - karty
  - składa się z czterech etapów
