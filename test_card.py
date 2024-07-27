@@ -38,18 +38,18 @@ def test_delete_card():
   del card_two
   assert Card.n_cards==2
 
-def test_simple_position_card(): #do naprawy
+def test_simple_position_card():
   card_one = Card.get("test.png")
   card_two = Card.get("test.png")
   card_three = Card.get("test.png")
   card_four = Card.get("test_gold.png")
-  positions = []
-  for card in Card.positions:
-    #positions.append(str(card.position)) #do zmiany na metodę, ktorej nie ma jeszcze
-    ...
+  cards = [card_one, card_two, card_three, card_four]
+  positions = [
+    str(card.position)
+    for card in cards
+    ]
   positions = "".join(positions)
-  positions = '2341' #CHWILOWO
-  assert positions=="2341"
+  assert positions=="1230"
 
 def test_card_compatibility():
   card_one = Card.get("test.png")

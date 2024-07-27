@@ -33,7 +33,6 @@ class Card:
     del self.level
     del self.position  
     if weakref.ref(self) in Card.positions:
-      print("Byłem w liście")
       Card.positions.remove(weakref.ref(self))
     Card.n_cards-=1
     
@@ -73,7 +72,19 @@ class Card:
     return n_stars
   
   def set_position(self):
-    ...
+    position = Card.positions.index(weakref.ref(self))
+    if Card.n_cards<=3:
+      return position
+    
+    while position>=0:
+      if self.level<Card.positions[position-1].__call__().level or position==0:
+        return position
+      
+      temp_card = Card.positions[position-1]
+      Card.positions[position-1] = weakref.ref(self)
+      Card.positions[position] = temp_card
+      Card.positions[position].__call__().position+=1
+      position-=1
 
 
   def get_powers(self, image_read):
@@ -103,5 +114,7 @@ if __name__ =='__main__':
   card_two = Card.get("test.png")
   card_three = Card.get("test.png")
   card_four = Card.get("test_gold.png")
-  print(card_one.powers)
-  print(Card.positions[0].__call__().powers)
+  print(card_one.position)
+  print(card_two.position)
+  print(card_three.position)
+  print(card_four.position)
