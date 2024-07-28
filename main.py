@@ -105,14 +105,21 @@ class Card:
     except:
       print(f"Pobranie mocy nie powiodło się")
       return 0
+    
+  def use(self):
+    if self.energy>1:
+      self.energy-=1
 
+  def update_stars(self):
+    if self.n_stars>0:
+      self.n_stars-=1
 
   @classmethod
   def get(cls, image):
     if 0<=len(Card.positions)<6:
         return cls(image)
     return "Nie udało się stworzyć karty"
-        
+  
 
 if __name__ =='__main__':
   card_one = Card.get("test.png")

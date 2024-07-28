@@ -22,6 +22,8 @@ Jest to bot, którego docelową funkcją będzie rozegranie całej gry w karty. 
    - **get_stars** - ustala ilość gwiazdek do ulepszenia
    - **set_position** - ustalenie pozycji karty i zwrócenie jej numeru
    - **get_powers** - pobranie mocy z karty
+   - **use** - oznacza użycie karty i aktualizuje jej energię (zmniejsza ją o 1)
+   - **update_stars** - aktualizuje dostępną liczbę ulepszeń
    - **get** - metoda tworząca kartę - dostępna za pomocą odwołania się do nazwy klasy (Card.get()) ze sprawdzaniem, czy nowa karta nie przekroczy maksymalnej ilości kart
 
 #####
@@ -54,4 +56,26 @@ Wspinaczka - karty
 		- wymaksowanie niebieskich
 		- zdobycie dużej ilości koni
 		- utrzymanie energii
-	
+
+### Określanie pozycji kart - notatka na przyszłość
+ - Wyjaśnienie oznaczeń:
+    - F - karta fioletowa (najwyższy level)
+    - G - karta złota
+    - N - karta niebieska
+    - SZ - karta szara (najniższy level)
+    - liczba za skrótem oznacza ilość gwiazdek (ulepszeń) w grze
+ - Jest ona zależna od:
+    - sumy mocy kart
+    - kolejności dodania do gry (nowsza karta = wyższe miejsce, gdy suma jest taka sama)
+ - Sumy mocy kart w zależności od poziomu i ilości gwiazdek:
+    - F5 (27)
+    - F4 (23)
+    - G4 (21)
+    - F3 (19)
+    - G3 (17)
+    - F2 i N3 (15)
+    - G2 (13)
+    - F1 i N2 (11)
+    - G1 i SZ2 (9)
+    - N1 (7)
+    - SZ1 (5)
