@@ -1,81 +1,96 @@
-# Card Game Bot
+# <p style="text-align: center; color: Wheat">Card Game Bot</p>
+
 Jest to bot, którego docelową funkcją będzie rozegranie całej gry w karty. Przed ostateczną wersją ma skupić się na analizie posiadanych w grze kart i proponować, które użyć w trwającej rundzie, by z największym prawdopodobieństwem pokonać przeciwnika.
 >Obecnie projekt jest na etapie tworzenia samego obiektu karty na podstawie testowych screenów.
 
-### **Klasa Card**
- Tworzy obiekt karty, która posiada:
-  - przekształcone zdjęcie do odczytu danych **[image_read]**
-  - ilość gwiazdek do ulepszeń karty **[n_stars]**
-  - wartości mocy w kolejności: fioletowa (dowództwo), zielona (zręczność), niebieska (inteligencja), czerwona (siła), suma **[powers]**
-  - ilość energii **[energy]**
-  - numer karty w grze **[n_card]**
-  - pozycja karty **[position]**
+***
+## <p style="text-align: center; color: Wheat">Klasa Card</p>
 
-  - level karty - ustalany przy pierwszym rozpoznaniu **[level]** ***chwilowo nie wiem, czy będzie jednak potrzebna***
+ Tworzy <span style="color: green">obiekt karty</span>, która posiada:
 
-  ##### 
-  Oprócz tego posiada metody:
-   - **change_image** - zmieniającą screena karty w postać do odczytu danych
+- przekształcone zdjęcie do odczytu danych <span style="color: green">**[image_read]**</span>
+- ilość gwiazdek do ulepszeń karty **<span style="color: green">[n_stars]**</span>
+- wartości mocy w kolejności: fioletowa (dowództwo), zielona (zręczność), niebieska (inteligencja), czerwona (siła), suma <span style="color: green">**[powers]**</span>
+- ilość energii <span style="color: green">**[energy]**</span>
+- numer karty w grze <span style="color: green">**[n_card]**</span>
+- pozycja karty <span style="color: green">**[position]**</span>
 
-   - **set_level** - ustalającą level karty - ***chwilowo nie wiem, czy będzie potrzebna, patrząc na to, że pozycję zaczęłam ustawiać względem sumy mocy.***
-
-   - **get_stars** - ustala ilość gwiazdek do ulepszenia
-   - **set_position** - ustalenie pozycji karty i zwrócenie jej numeru
-   - **get_powers** - pobranie mocy z karty
-   - **use** - oznacza użycie karty i aktualizuje jej energię (zmniejsza ją o 1)
-   - **update_stars** - aktualizuje dostępną liczbę ulepszeń
-   - **get** - metoda tworząca kartę - dostępna za pomocą odwołania się do nazwy klasy (Card.get()) ze sprawdzaniem, czy nowa karta nie przekroczy maksymalnej ilości kart
+- level karty - ustalany przy pierwszym rozpoznaniu <span style="color: green">**[level]**</span> ***chwilowo nie wiem, czy będzie jednak potrzebna***
 
 #####
-...oraz statyczne pola:
- - **star** - przechowuje odczytaną gwiazdkę
- - **n_cards** - liczba kart istniejących w danej grze (niekoniecznie już aktywnych). Istotne przy ustalaniu kolejności kart - nowsza karta=wyższa pozycja
- - **positions** - lista z kartami (ich słabymi referencjami do obiektu), na której operujemy zmianą kolejności
-### Zasady gry:
+
+  Oprócz tego posiada <span style="color: LightSkyBlue">metody</span>:
+
+- <span style="color: LightSkyBlue">**take_screenshoot**</span> - robiąca screena tworzonej lub aktualizowanej karty
+- <span style="color: LightSkyBlue">**change_image**</span> - zmieniającą screena karty w postać do odczytu danych
+
+- <span style="color: LightSkyBlue">**set_level**</span> - ustalającą level karty - ***chwilowo nie wiem, czy będzie potrzebna, patrząc na to, że pozycję zaczęłam ustawiać względem sumy mocy.***
+
+- <span style="color: LightSkyBlue">**get_stars**</span> - ustala ilość gwiazdek do ulepszenia
+- <span style="color: LightSkyBlue">**set_position**</span> - ustalenie pozycji karty i zwrócenie jej numeru
+- <span style="color: LightSkyBlue">**get_powers**</span> - pobranie mocy z karty
+- <span style="color: LightSkyBlue">**use**</span> - oznacza użycie karty i aktualizuje jej energię (zmniejsza ją o 1)
+- <span style="color: LightSkyBlue">**update_stars**</span> - aktualizuje dostępną liczbę ulepszeń
+- <span style="color: LightSkyBlue">**get**</span> - metoda tworząca kartę - dostępna za pomocą odwołania się do nazwy klasy (Card.get()) ze sprawdzaniem, czy nowa karta nie przekroczy maksymalnej ilości kart
+
+#####
+
+...oraz <span style="color: Orange">statyczne pola</span>:
+
+- <span style="color: Orange">**star**</span> - przechowuje odczytaną gwiazdkę
+- <span style="color: Orange">**n_cards**</span> - liczba kart istniejących w danej grze (niekoniecznie już aktywnych). Istotne przy ustalaniu kolejności kart - nowsza karta=wyższa pozycja
+- <span style="color: Orange">**positions**</span> - lista z kartami (ich słabymi referencjami do obiektu), na której operujemy zmianą kolejności
+
+***
+## <p style="text-align: center; color: Wheat">Zasady gry</p>
+
 Wspinaczka - karty
- - składa się z czterech etapów
- - na start dostajemy 3 losowe karty
- - możemy mieć max 6 kart
- - każda karta ma swoje moce oraz energię
- - jedna karta może mieć max 4 punkty energii
- - moce:
-	- fioletowa - dowództwo
-	- zielona - zręczność
-	- niebieska - inteligencja
-	- czerwona - siła
+
+- składa się z czterech etapów
+- na start dostajemy 3 losowe karty
+- możemy mieć max 6 kart
+- każda karta ma swoje moce oraz energię
+- jedna karta może mieć max 4 punkty energii
+- moce:
+ 	- fioletowa - dowództwo
+ 	- zielona - zręczność
+ 	- niebieska - inteligencja
+ 	- czerwona - siła
 - boss ma wszystkich mocy po 18 pkt.
 - dostępne premie po poziomach:
-	- boska karta
-	- zwiększenie poziomu
-	- odzyskanie energii
-	- dopalacze (teoretycznie najmniej opłacalne)
- - etap pierwszy
-	- rozpoznanie kart i zliczenie ich początkowej mocy, by ułatwić dalsze dobieranie
-	- idziemy prawą ścieżką zawsze
-	- priorytety na ten etap:
-		- wymaksowanie niebieskich
-		- zdobycie dużej ilości koni
-		- utrzymanie energii
+ 	- boska karta
+ 	- zwiększenie poziomu
+ 	- odzyskanie energii
+ 	- dopalacze (teoretycznie najmniej opłacalne)
+- etap pierwszy
+ 	- rozpoznanie kart i zliczenie ich początkowej mocy, by ułatwić dalsze dobieranie
+ 	- idziemy prawą ścieżką zawsze
+ 	- priorytety na ten etap:
+  		- wymaksowanie niebieskich
+  		- zdobycie dużej ilości koni
+  		- utrzymanie energii
 
-### Określanie pozycji kart - notatka na przyszłość
- - Wyjaśnienie oznaczeń:
-    - F - karta fioletowa (najwyższy level)
-    - G - karta złota
-    - N - karta niebieska
-    - SZ - karta szara (najniższy level)
-    - liczba za skrótem oznacza ilość gwiazdek (ulepszeń) w grze
- - Jest ona zależna od:
-    - sumy mocy kart
-    - kolejności dodania do gry (nowsza karta = wyższe miejsce, gdy suma jest taka sama)
- - Sumy mocy kart w zależności od poziomu i ilości gwiazdek:
-    - F5 (27)
-    - F4 (23)
-    - G4 (21)
-    - F3 (19)
-    - G3 (17)
-    - F2 i N3 (15)
-    - G2 (13)
-    - F1 i N2 (11)
-    - G1 i SZ2 (9)
-    - N1 (7)
-    - SZ1 (5)
+***
+## <p style="text-align: center; color: Wheat">Określanie pozycji kart - notatka na przyszłość</p>
+
+- Wyjaśnienie oznaczeń:
+  - <span style="color: Plum">F</span> - karta fioletowa (najwyższy level)
+  - <span style="color: Gold">G</span> - karta złota
+  - <span style="color: Turquoise">N</span> - karta niebieska
+  - <span style="color: Silver">SZ</span> - karta szara (najniższy level)
+  - liczba za skrótem oznacza ilość gwiazdek (ulepszeń) w grze
+- Jest ona zależna od:
+  - sumy mocy kart
+  - kolejności dodania do gry (nowsza karta = wyższe miejsce, gdy suma jest taka sama)
+- Sumy mocy kart w zależności od poziomu i ilości gwiazdek:
+  - <span style="color: Plum">F5</span> (**27**)
+  - <span style="color: Plum">F4</span> (**23**)
+  - <span style="color: Gold">G4</span> (**21**)
+  - <span style="color: Plum">F3</span> (**19**)
+  - <span style="color: Gold">G3</span> (**17**)
+  - <span style="color: Plum">F2</span> i <span style="color: Turquoise">N3</span> (**15**)
+  - <span style="color: Gold">G2</span> (**13**)
+  - <span style="color: Plum">F1</span> i <span style="color: Turquoise">N2</span> (**11**)
+  - <span style="color: Gold">G1</span> i <span style="color: Silver">SZ2</span> (**9**)
+  - <span style="color: Turquoise">N1</span> (**7**)
+  - <span style="color: Silver">SZ1</span> (**5**)

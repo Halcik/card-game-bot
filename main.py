@@ -14,8 +14,10 @@ class Card:
   n_cards = 0
   positions = []
 
-  def __init__(self, image):
+  def __init__(self, image=None):
     Card.n_cards+=1
+    if image is None:
+      image = self.take_screenshoot()
     self.image_read = self.change_image(image)
     self.n_stars = self.get_stars(self.image_read)
     self.powers = self.get_powers(self.image_read)
@@ -45,6 +47,9 @@ class Card:
     *Możliwości ulepszenia = {self.n_stars}
     *Level = {self.level}'''
   
+  def take_screenshoot(self):
+    ...
+
 
   def change_image(self, image):
     image_read = cv2.imread(image)
@@ -106,16 +111,18 @@ class Card:
       print(f"Pobranie mocy nie powiodło się")
       return 0
     
+
   def use(self):
     if self.energy>1:
       self.energy-=1
+
 
   def update_stars(self):
     if self.n_stars>0:
       self.n_stars-=1
 
   @classmethod
-  def get(cls, image):
+  def get(cls, image=None):
     if 0<=len(Card.positions)<6:
         return cls(image)
     return "Nie udało się stworzyć karty"
