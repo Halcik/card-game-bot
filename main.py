@@ -2,6 +2,7 @@ import pytesseract as pyt #from installer (for windows) https://github.com/UB-Ma
 import cv2
 import numpy as np
 import weakref
+import pyautogui as pg
 
 
 #langCodes - https://tesseract-ocr.github.io/tessdoc/Data-Files-in-different-versions.html
@@ -20,7 +21,9 @@ class Card:
       image = self.take_screenshoot()
     self.image_read = self.change_image(image)
     self.n_stars = self.get_stars(self.image_read)
+    print("Gwiazdki:", self.n_stars)
     self.powers = self.get_powers(self.image_read)
+    print("Moce:", self.powers)
     self.energy = 4
     self.level = self.set_level() # probably to be removed
     Card.positions.append(weakref.ref(self))
@@ -46,9 +49,11 @@ class Card:
     *Moce = {self.powers}
     *Możliwości ulepszenia = {self.n_stars}
     *Level = {self.level}'''
-  
+
+
   def take_screenshoot(self):
-    ...
+    screenshot = pg.screenshot()
+    screenshot.save('screen.png')
 
 
   def change_image(self, image):
@@ -66,6 +71,8 @@ class Card:
       case 2: #blue
         level = 2
       case 1: #gray
+        level = 1
+      case _:
         level = 1
     return level
   
@@ -130,10 +137,4 @@ class Card:
 
 if __name__ =='__main__':
   card_one = Card.get("test.png")
-  card_two = Card.get("test.png")
-  card_three = Card.get("test.png")
-  card_four = Card.get("test_gold.png")
-  print(card_one.position)
-  print(card_two.position)
-  print(card_three.position)
-  print(card_four.position)
+  card_one = Card.get("screenshot.png")
