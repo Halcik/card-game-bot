@@ -72,3 +72,30 @@ def test_card_compatibility():
   assert Card.positions[0].__call__()==card_one #or without __call__ and with weakref.ref(card_one)
   assert Card.positions[1].__call__()==card_two
   assert Card.positions[2].__call__()==card_three
+
+def test_use_card():
+  card_one = Card.get("test.png")
+  card_one.use()
+  assert card_one.energy==3
+  card_one.use()
+  assert card_one.energy==2
+  card_one.use()
+  assert card_one.energy==1
+  card_one.use()
+  assert card_one.energy==0
+  card_one.use()
+  assert card_one.energy==0
+
+def test_sum_of_powers():
+  card_one = Card.get("test.png")
+  card_two = Card.get("test_blue.png")
+  card_three = Card.get("test_gold.png")
+  card_four = Card.get("test_gray.png")
+  card_five = Card.get("test_violet.png")
+  card_six = Card.get("test_violet.png")
+  assert Card.sum_of_powers(0)==19
+  assert Card.sum_of_powers(1)==6
+  assert Card.sum_of_powers(2)==15
+  assert Card.sum_of_powers(3)==14
+  assert Card.sum_of_powers(4)==54
+  assert Card.sum_of_powers()==54

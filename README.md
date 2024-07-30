@@ -8,38 +8,53 @@ Jest to bot, którego docelową funkcją będzie rozegranie całej gry w karty. 
 
  Tworzy <span style="color: green">obiekt karty</span>, która posiada:
 
-- przekształcone zdjęcie do odczytu danych <span style="color: green">**[image_read]**</span>
-- ilość gwiazdek do ulepszeń karty **<span style="color: green">[n_stars]**</span>
-- wartości mocy w kolejności: fioletowa (dowództwo), zielona (zręczność), niebieska (inteligencja), czerwona (siła), suma <span style="color: green">**[powers]**</span>
-- ilość energii <span style="color: green">**[energy]**</span>
-- numer karty w grze <span style="color: green">**[n_card]**</span>
-- pozycja karty <span style="color: green">**[position]**</span>
+- przekształcone zdjęcie do odczytu danych <span style="color: green">**[image_read]**</span>,
 
-- level karty - ustalany przy pierwszym rozpoznaniu <span style="color: green">**[level]**</span> ***chwilowo nie wiem, czy będzie jednak potrzebna***
+- ilość gwiazdek do ulepszeń karty **<span style="color: green">[n_stars]**</span>,
+
+- wartości mocy w kolejności: fioletowa (dowództwo), zielona (zręczność), niebieska (inteligencja), czerwona (siła), suma <span style="color: green">**[powers]**</span>,
+
+- ilość energii <span style="color: green">**[energy]**</span>,
+
+- numer karty w grze <span style="color: green">**[n_card]**</span>,
+
+- pozycja karty <span style="color: green">**[position]**</span>,
+
+- level karty - ustalany przy pierwszym rozpoznaniu <span style="color: green">**[level]**</span> ***chwilowo nie wiem, czy będzie jednak potrzebna***.
 
 #####
 
   Oprócz tego posiada <span style="color: LightSkyBlue">metody</span>:
 
-- <span style="color: LightSkyBlue">**take_screenshoot**</span> - robiąca screena tworzonej lub aktualizowanej karty
-- <span style="color: LightSkyBlue">**change_image**</span> - zmieniającą screena karty w postać do odczytu danych
+- <span style="color: LightSkyBlue">**take_screenshoot**</span> - robiąca screena tworzonej lub aktualizowanej karty,
 
-- <span style="color: LightSkyBlue">**set_level**</span> - ustalającą level karty - ***chwilowo nie wiem, czy będzie potrzebna, patrząc na to, że pozycję zaczęłam ustawiać względem sumy mocy.***
+- <span style="color: LightSkyBlue">**change_image**</span> - zmieniającą screena karty w postać do odczytu danych,
 
-- <span style="color: LightSkyBlue">**get_stars**</span> - ustala ilość gwiazdek do ulepszenia
-- <span style="color: LightSkyBlue">**set_position**</span> - ustalenie pozycji karty i zwrócenie jej numeru
-- <span style="color: LightSkyBlue">**get_powers**</span> - pobranie mocy z karty
-- <span style="color: LightSkyBlue">**use**</span> - oznacza użycie karty i aktualizuje jej energię (zmniejsza ją o 1)
-- <span style="color: LightSkyBlue">**update_stars**</span> - aktualizuje dostępną liczbę ulepszeń
-- <span style="color: LightSkyBlue">**get**</span> - metoda tworząca kartę - dostępna za pomocą odwołania się do nazwy klasy (Card.get()) ze sprawdzaniem, czy nowa karta nie przekroczy maksymalnej ilości kart
+- <span style="color: LightSkyBlue">**set_level**</span> - ustalającą level karty - ***chwilowo nie wiem, czy będzie potrzebna, patrząc na to, że pozycję zaczęłam ustawiać względem sumy mocy***,
+
+- <span style="color: LightSkyBlue">**get_stars**</span> - ustala ilość gwiazdek do ulepszenia,
+
+- <span style="color: LightSkyBlue">**set_position**</span> - ustalenie pozycji karty i zwrócenie jej numeru,
+
+- <span style="color: LightSkyBlue">**get_powers**</span> - pobranie mocy z karty,
+
+- <span style="color: LightSkyBlue">**use**</span> - oznacza użycie karty i aktualizuje jej energię (zmniejsza ją o 1),
+
+- <span style="color: LightSkyBlue">**update_stars**</span> - aktualizuje dostępną liczbę ulepszeń,
+
+- <span style="color: LightSkyBlue">**get**</span> - metoda tworząca kartę - dostępna za pomocą odwołania się do nazwy klasy (Card.get()) ze sprawdzaniem, czy nowa karta nie przekroczy maksymalnej ilości kart,
+
+- <span style="color: LightSkyBlue">**sum_of_powers**</span> - metoda klasy, która zlicza moc wszystkich kart. Bez podania argumentu - sumę wszystkich, gdy natomiast podamy, to odpowiedniej mocy.
 
 #####
 
 ...oraz <span style="color: Orange">statyczne pola</span>:
 
-- <span style="color: Orange">**star**</span> - przechowuje odczytaną gwiazdkę
-- <span style="color: Orange">**n_cards**</span> - liczba kart istniejących w danej grze (niekoniecznie już aktywnych). Istotne przy ustalaniu kolejności kart - nowsza karta=wyższa pozycja
-- <span style="color: Orange">**positions**</span> - lista z kartami (ich słabymi referencjami do obiektu), na której operujemy zmianą kolejności
+- <span style="color: Orange">**star**</span> - przechowuje odczytaną gwiazdkę,
+
+- <span style="color: Orange">**n_cards**</span> - liczba kart istniejących w danej grze (niekoniecznie już aktywnych). Istotne przy ustalaniu kolejności kart - nowsza karta=wyższa pozycja,
+
+- <span style="color: Orange">**positions**</span> - lista z kartami (ich słabymi referencjami do obiektu), na której operujemy zmianą kolejności.
 
 ***
 ## <p style="text-align: center; color: Wheat">Zasady gry</p>

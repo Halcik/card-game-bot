@@ -54,6 +54,7 @@ class Card:
   def take_screenshoot(self):
     screenshot = pg.screenshot()
     screenshot.save('screen.png')
+    screenshot = cv2.cvtColor(np.array(screenshot), cv2.COLOR_RGB2BGR)
 
 
   def change_image(self, image):
@@ -120,8 +121,9 @@ class Card:
     
 
   def use(self):
-    if self.energy>1:
+    if self.energy>=1:
       self.energy-=1
+    print("Nie można użyć karty")
 
 
   def update_stars(self):
@@ -130,11 +132,19 @@ class Card:
 
   @classmethod
   def get(cls, image=None):
-    if 0<=len(Card.positions)<6:
+    if 0<=len(cls.positions)<6:
         return cls(image)
     return "Nie udało się stworzyć karty"
+  
+  @classmethod
+  def sum_of_powers(cls, power=4):
+    sum = 0
+    for card in cls.positions:
+      sum += card.__call__().powers[power]
+    return sum
+  
   
 
 if __name__ =='__main__':
   card_one = Card.get("test.png")
-  card_one = Card.get("screenshot.png")
+  #card_one = Card.get("card_0.png")
