@@ -99,3 +99,12 @@ def test_sum_of_powers():
   assert Card.sum_of_powers(3)==14
   assert Card.sum_of_powers(4)==54
   assert Card.sum_of_powers()==54
+
+def test_delete_weak_card():
+  card_one = Card.get("test.png") #2
+  card_two = Card.get("test.png") #1
+  card_three = Card.get("test.png") #3 this will be delete from list
+  card_four = Card.get("test_gold.png") #0
+  Card.delete_weak_card()
+  assert len(Card.positions)==3
+  assert Card.positions[-1].__call__()!=card_three

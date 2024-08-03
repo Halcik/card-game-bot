@@ -46,6 +46,8 @@ Jest to bot, którego docelową funkcją będzie rozegranie całej gry w karty. 
 
 - <span style="color: LightSkyBlue">**sum_of_powers**</span> - metoda klasy, która zlicza moc wszystkich kart. Bez podania argumentu - sumę wszystkich, gdy natomiast podamy, to odpowiedniej mocy.
 
+- <span style="color: LightSkyBlue">**delete_weak_card**</span> - metoda klasy, która usuwa najsłabszą kartę z listy (ale nie usuwa samego w sobie obiektu - uznaję, że obiektów nie powinno być więcej niż 20 podczas jednej gry i nie będzie to za bardzo obciążać pamięciowo programu).
+
 #####
 
 ...oraz <span style="color: Orange">statyczne pola</span>:

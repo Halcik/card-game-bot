@@ -51,7 +51,7 @@ class Card:
     *Level = {self.level}'''
 
 
-  def take_screenshoot(self):
+  def take_screenshoot(self): 
     screenshot = pg.screenshot()
     screenshot.save('screen.png')
     screenshot = cv2.cvtColor(np.array(screenshot), cv2.COLOR_RGB2BGR)
@@ -78,7 +78,7 @@ class Card:
     return level
   
 
-  def get_stars(self, image_read):
+  def get_stars(self, image_read): #dodać skalowanie - jeśli w danym skalowaniu wykryje jakąś gwiazdkę, to break
     res = cv2.matchTemplate(image_read, Card.star, cv2.TM_CCOEFF_NORMED)
     threshold = 0.8
     loc = np.where( res >= threshold)
@@ -130,6 +130,7 @@ class Card:
     if self.n_stars>0:
       self.n_stars-=1
 
+
   @classmethod
   def get(cls, image=None):
     if 0<=len(cls.positions)<6:
@@ -143,6 +144,10 @@ class Card:
       sum += card.__call__().powers[power]
     return sum
   
+  @classmethod
+  def delete_weak_card(cls): #didn't work
+    weak_card_ref = cls.positions[-1]
+    cls.positions.remove(weak_card_ref)
   
 
 if __name__ =='__main__':
